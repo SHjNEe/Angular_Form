@@ -1,7 +1,68 @@
 <div class="container">
   <div class="row">
     <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
-      <!-- <form (ngSubmit)="onSubmit(form)" #form="ngForm"> -->
+      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+        <div formGroupName="userData">
+          <div class="form-group">
+            <label for="username">User Name</label>
+            <input
+              type="text"
+              id="userName"
+              class="form-control"
+              formControlName="userName"
+            />
+            <span
+              *ngIf="
+                !signupForm.get('userData.userName').valid &&
+                signupForm.get('userData.userName').touched
+              "
+              class="help-block"
+            >
+              Please enter a valid user name
+            </span>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input
+              type="text"
+              id="userEmail"
+              class="form-control"
+              formControlName="userEmail"
+            />
+            <span
+              *ngIf="
+                !signupForm.get('userData.userEmail').valid &&
+                signupForm.get('userData.userEmail').touched
+              "
+              class="help-block"
+            >
+              Please enter a valid user email
+            </span>
+          </div>
+        </div>
+        <div class="radio" *ngFor="let gender of genders">
+          <label>
+            <input type="radio" [value]="gender" formControlName="gender" />{{
+              gender
+            }}
+          </label>
+        </div>
+        <button
+          class="btn btn-primary"
+          type="submit"
+          [disabled]="!signupForm.valid"
+        >
+          Submit
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- 
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
       <form (ngSubmit)="onSubmit()" #form="ngForm">
         <div id="user-data" ngModelGroup="userData" #userData="ngModelGroup">
           <div class="form-group">
@@ -104,4 +165,4 @@
       <p>Gender: {{ user.gender }}</p>
     </div>
   </div>
-</div>
+</div> -->
