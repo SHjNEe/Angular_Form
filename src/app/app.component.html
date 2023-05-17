@@ -18,7 +18,18 @@
               "
               class="help-block"
             >
-              Please enter a valid user name
+              <span
+                *ngIf="
+                  signupForm.get('userData.userName').errors['nameIsForbidden']
+                "
+              >
+                This name is invalid</span
+              >
+              <span
+                *ngIf="signupForm.get('userData.userName').errors['required']"
+              >
+                This fiel is required</span
+              >
             </span>
           </div>
           <div class="form-group">
@@ -36,7 +47,35 @@
               "
               class="help-block"
             >
-              Please enter a valid user email
+              <span
+                *ngIf="signupForm.get('userData.userEmail').errors['email']"
+              >
+                This email this is not a valid</span
+              >
+
+              <span
+                *ngIf="
+                  signupForm.get('userData.userEmail').errors[
+                    'invalidGmailDomain'
+                  ]
+                "
+              >
+                This email domain is not a valid</span
+              >
+              <span
+                *ngIf="signupForm.get('userData.userEmail').errors['required']"
+              >
+                This fiel is required</span
+              >
+              <span
+                *ngIf="
+                  signupForm.get('userData.userEmail').errors[
+                    'emailIsForbidden'
+                  ]
+                "
+              >
+                This email this is not a valid forbidden</span
+              >
             </span>
           </div>
         </div>
@@ -47,6 +86,28 @@
             }}
           </label>
         </div>
+
+        <div formArrayName="hobbies">
+          <h4>Your Hobbies</h4>
+          <button class="btn btn-default" (click)="onAddHobby()">
+            Add Hobbies
+          </button>
+          <div class="form-group" *ngIf="signupForm.get('hobbies') as hobbies">
+            <div
+              class="form-group"
+              *ngFor="let hobbyControl of hobbies.controls; let i = index"
+            >
+              <input type="text" class="form-control" [formControlName]="i" />
+            </div>
+          </div>
+        </div>
+        <span
+          *ngIf="!signupForm.valid && signupForm.touched"
+          class="help-block"
+        >
+          Please enter a valid data!</span
+        >
+        <hr />
         <button
           class="btn btn-primary"
           type="submit"
